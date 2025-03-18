@@ -1,14 +1,15 @@
 import aio_pika
 import pytest
 import redis.asyncio as redis
+
 from sikei.message_brokers.rabbitmq import RabbitMQMessageBroker
 from sikei.message_brokers.redis import RedisMessageBroker
 
 
 @pytest.fixture()
 def redis_client() -> redis.Redis:
-    # return redis.Redis.from_url("redis://localhost:6379/0")
-    return redis.Redis.from_url("redis://broker:p4ssw0rd@127.0.0.1:6379/3")
+    return redis.Redis.from_url("redis://localhost:6379/0")
+    # return redis.Redis.from_url("redis://broker:p4ssw0rd@127.0.0.1:6379/3")
 
 @pytest.fixture()
 def redis_message_broker(redis_client: redis.Redis) -> RedisMessageBroker:
