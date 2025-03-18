@@ -3,8 +3,9 @@ from typing import Type
 from uuid import UUID, uuid4
 
 import pytest
+
 from sikei.events import Event, EventEmitter, EventMap
-from sikei.mesikei import Mesikei
+from sikei.mediator import Mesikei
 from sikei.requests import Request, RequestHandler, RequestMap
 from sikei.response import Response
 
@@ -65,7 +66,7 @@ class TestContainer:
 
 
 @pytest.fixture
-def mesikei() -> Mesikei:
+def mediator() -> Mesikei:
     event_emitter = EventEmitter(
         event_map=EventMap(),
         container=TestContainer(),  # type: ignore
@@ -80,12 +81,12 @@ def mesikei() -> Mesikei:
     )
 
 
-async def test_sending_request_with_response(mesikei: Mesikei) -> None:
+async def test_sending_request_with_response(mediator: Mesikei) -> None:
     handler = await TestContainer().resolve(ReadMeetingDetailsQueryHandler)
 
     assert not handler.called
 
-    response = await mesikei.send(ReadMeetingDetailsQuery(meeting_room_id=uuid4()))
+    response = await mediator.send(ReadMeetingDetailsQuery(meeting_room_id=uuid4()))
 
     assert handler.called
     assert response
@@ -93,10 +94,10 @@ async def test_sending_request_with_response(mesikei: Mesikei) -> None:
     assert response.meeting_room_id
 
 
-async def test_sending_request_without_response(mesikei: Mesikei) -> None:
+async def test_sending_request_without_response(mediator: Mesikei) -> None:
     handler = await TestContainer().resolve(CloseMeetingRoomCommandHandler)
     assert not handler.called
 
-    await mesikei.send(CloseMeetingRoomCommand(meeting_room_id=uuid4()))
+    await mediator.send(CloseMeetingRoomCommand(meeting_room_id=uuid4()))
 
     assert handler.called

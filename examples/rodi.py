@@ -4,6 +4,7 @@ from dataclasses import dataclass
 
 from redis import asyncio as redis
 from rodi import Container
+
 from sikei.container.rodi import RodiContainer
 from sikei.events import (
     DomainEvent,
@@ -12,7 +13,7 @@ from sikei.events import (
     EventMap,
     NotificationEvent,
 )
-from sikei.mesikei import Mesikei
+from sikei.mediator import Mesikei
 from sikei.message_brokers.redis import RedisMessageBroker
 from sikei.middlewares import MiddlewareChain
 from sikei.middlewares.logging import LoggingMiddleware
@@ -101,14 +102,14 @@ async def main() -> None:
         container=container,
     )
 
-    mesikei = Mesikei(
+    mediator = Mesikei(
         request_map=request_map,
         event_emitter=event_emitter,
         container=container,
         middleware_chain=middleware_chain,
     )
 
-    await mesikei.send(JoinMeetingRoomCommand(user_id=1))
+    await mediator.send(JoinMeetingRoomCommand(user_id=1))
 
 
 if __name__ == "__main__":

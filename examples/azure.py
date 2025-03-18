@@ -5,9 +5,10 @@ from datetime import timedelta
 
 import rodi
 from azure.servicebus.aio import ServiceBusClient
+
 from sikei.container.rodi import RodiContainer
 from sikei.events import EventEmitter, EventMap, NotificationEvent
-from sikei.mesikei import Mesikei
+from sikei.mediator import Mesikei
 from sikei.message_brokers.azure import AzureMessageBroker
 from sikei.requests import Request, RequestHandler, RequestMap
 
@@ -55,9 +56,9 @@ async def main() -> None:
     message_broker = AzureMessageBroker(azure_service_bus_client, topic_name, timeout=15)
     event_emitter = EventEmitter(message_broker=message_broker, event_map=EventMap(), container=container)
 
-    mesikei = Mesikei(event_emitter=event_emitter, request_map=request_map, container=container)
+    mediator = Mesikei(event_emitter=event_emitter, request_map=request_map, container=container)
 
-    await mesikei.send(CleanUnactiveUsersCommand(eta=timedelta(days=1)))
+    await mediator.send(CleanUnactiveUsersCommand(eta=timedelta(days=1)))
 
 
 if __name__ == "__main__":

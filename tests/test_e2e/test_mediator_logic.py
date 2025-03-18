@@ -3,9 +3,10 @@ from dataclasses import dataclass
 import pytest
 from redis import asyncio as redis
 from rodi import Container, ServiceLifeStyle
+
 from sikei.container.rodi import RodiContainer
 from sikei.events import EventEmitter, EventMap
-from sikei.mesikei import Mesikei
+from sikei.mediator import Mesikei
 from sikei.message_brokers.redis import RedisMessageBroker
 from sikei.middlewares import MiddlewareChain
 from sikei.requests import Request, RequestHandler, RequestMap
@@ -39,7 +40,7 @@ class TestMiddleware:
 
 
 @pytest.fixture
-def mesikei(redis_client) -> Mesikei:
+def mediator(redis_client) -> Mesikei:
     container = Container()
     container.register_factory(
         lambda: redis_client,
@@ -72,7 +73,7 @@ def mesikei(redis_client) -> Mesikei:
 
 
 @pytest.fixture
-def mesikei_without_broker(redis_client) -> Mesikei:
+def mediator_without_broker(redis_client) -> Mesikei:
     container = Container()
     container.register_factory(
         lambda: redis_client,
@@ -103,7 +104,7 @@ def mesikei_without_broker(redis_client) -> Mesikei:
 
 
 @pytest.fixture
-def mesikei_without_event_emitter(redis_client) -> Mesikei:
+def mediator_without_event_emitter(redis_client) -> Mesikei:
     container = Container()
     container.register_factory(
         lambda: redis_client,
@@ -127,17 +128,17 @@ def mesikei_without_event_emitter(redis_client) -> Mesikei:
     )
 
 
-async def test_send_command_with_middleware(redis_client: redis.Redis, mesikei: Mesikei):
-    await mesikei.send(JoinMeetingRoomCommand(user_id=1, meeting_id=1))
+async def test_send_command_with_middleware(redis_client: redis.Redis, mediator: Mesikei):
+    await mediator.send(JoinMeetingRoomCommand(user_id=1, meeting_id=1))
 
     value = await redis_client.get("1")
 
     assert value == b"1"
 
 
-async def test_mesikei_without_message_broker(mesikei_without_broker: Mesikei) -> None:
-    await mesikei_without_broker.send(JoinMeetingRoomCommand(user_id=1, meeting_id=1))
+async def test_mediator_without_message_broker(mediator_without_broker: Mesikei) -> None:
+    await mediator_without_broker.send(JoinMeetingRoomCommand(user_id=1, meeting_id=1))
 
 
-async def test_mesikei_without_message_event_emitter(mesikei_without_event_emitter: Mesikei) -> None:
-    await mesikei_without_event_emitter.send(JoinMeetingRoomCommand(user_id=1, meeting_id=1))
+async def test_mediator_without_message_event_emitter(mediator_without_event_emitter: Mesikei) -> None:
+    await mediator_without_event_emitter.send(JoinMeetingRoomCommand(user_id=1, meeting_id=1))

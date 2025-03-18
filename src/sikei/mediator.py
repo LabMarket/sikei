@@ -10,7 +10,7 @@ from sikei.response import Response
 
 class Mesikei:
     """
-    The main mesikei object.
+    The main mediator object.
 
     Usage::
 
@@ -22,14 +22,14 @@ class Mesikei:
       request_map.bind(JoinUserCommand, JoinUserCommandHandler)
       event_emitter = EventEmitter(event_map, container, message_broker)
 
-      mesikei = Mesikei(
+      mediator = Mesikei(
         event_emitter=event_emitter,
         request_map=request_map,
         container=container
       )
 
       # Handles command and published events by the command handler.
-      await mesikei.send(join_user_command)
+      await mediator.send(join_user_command)
 
     """
 

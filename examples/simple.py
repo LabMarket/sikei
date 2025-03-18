@@ -3,9 +3,10 @@ from dataclasses import dataclass, field
 
 from di import Container, bind_by_type
 from di.dependent import Dependent
+
 from sikei.container.di import DIContainer
 from sikei.events import Event, EventEmitter, EventMap
-from sikei.mesikei import Mesikei
+from sikei.mediator import Mesikei
 from sikei.requests import Request, RequestHandler, RequestMap
 
 
@@ -55,13 +56,13 @@ async def main() -> None:
 
     event_emitter = EventEmitter(event_map=EventMap(), container=container, message_broker=None)
 
-    mesikei = Mesikei(
+    mediator = Mesikei(
         request_map=request_map,
         event_emitter=event_emitter,
         container=container,
     )
 
-    await mesikei.send(JoinMeetingCommand(user_id=1, meeting_id=1, is_late=True))
+    await mediator.send(JoinMeetingCommand(user_id=1, meeting_id=1, is_late=True))
 
 
 if __name__ == "__main__":
