@@ -1,6 +1,6 @@
 
 <a href="https://github.com/LabMarket/sikei/actions?query=setup%3ACI%2FCD+event%3Apush+branch%3Adev" target="_blank">
-    <img src="https://github.com/LabMarket/sikei/actions/workflows/setup.yml/badge.svg?event=push&branch=dev" alt="Test">
+    <img src="https://github.com/LabMarket/sikei/actions/workflows/setup.yml/badge.svg?branch=dev" alt="Test">
 </a>
 <a href="https://pepy.tech/project/sikei" target="_blank">
     <img src="https://static.pepy.tech/personalized-badge/sikei?period=total&units=international_system&left_color=black&right_color=red&left_text=downloads" alt="Downloads">
