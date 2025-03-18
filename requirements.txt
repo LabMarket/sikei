@@ -16,3 +16,4 @@ mkdocs
 mkdocs-material
 mkdocstrings
 aio_pika
+dependency-injector
