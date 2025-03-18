@@ -1,11 +1,11 @@
 from dataclasses import dataclass, field
 from uuid import UUID, uuid4
 
-from diator.dispatcher import DefaultDispatcher
-from diator.events import Event
-from diator.middlewares import MiddlewareChain
-from diator.requests import Request, RequestHandler
-from diator.requests.map import RequestMap
+from sikei.dispatcher import DefaultDispatcher
+from sikei.events import Event
+from sikei.middlewares import MiddlewareChain
+from sikei.requests import Request, RequestHandler
+from sikei.requests.map import RequestMap
 
 
 @dataclass(kw_only=True)

@@ -1,22 +1,21 @@
-![Diator Logo](https://github.com/akhundMurad/diator/blob/main/assets/logo_diator.svg?raw=true)
 
-<a href="https://github.com/akhundMurad/diator/actions?query=setup%3ACI%2FCD+event%3Apush+branch%3Amain" target="_blank">
-    <img src="https://github.com/akhundMurad/diator/actions/workflows/setup.yml/badge.svg?event=push&branch=main" alt="Test">
+<a href="https://github.com/LabMarket/sikei/actions?query=setup%3ACI%2FCD+event%3Apush+branch%3Amain" target="_blank">
+    <img src="https://github.com/LabMarket/sikei/actions/workflows/setup.yml/badge.svg?event=push&branch=main" alt="Test">
 </a>
-<a href="https://pepy.tech/project/diator" target="_blank">
-    <img src="https://static.pepy.tech/personalized-badge/diator?period=total&units=international_system&left_color=black&right_color=red&left_text=downloads" alt="Downloads">
+<a href="https://pepy.tech/project/sikei" target="_blank">
+    <img src="https://static.pepy.tech/personalized-badge/sikei?period=total&units=international_system&left_color=black&right_color=red&left_text=downloads" alt="Downloads">
 </a>
-<a href="https://pypi.org/project/diator" target="_blank">
-    <img src="https://img.shields.io/pypi/v/diator?color=red&labelColor=black" alt="Package version">
+<a href="https://pypi.org/project/sikei" target="_blank">
+    <img src="https://img.shields.io/pypi/v/sikei?color=red&labelColor=black" alt="Package version">
 </a>
-<a href="https://pypi.org/project/diator" target="_blank">
-    <img src="https://img.shields.io/pypi/pyversions/diator.svg?color=red&labelColor=black" alt="Supported Python versions">
+<a href="https://pypi.org/project/sikei" target="_blank">
+    <img src="https://img.shields.io/pypi/pyversions/sikei.svg?color=red&labelColor=black" alt="Supported Python versions">
 </a>
 
-# Diator - CQRS Library for Python
-**[Docs](https://akhundmurad.github.io/diator/) | [PyPI](https://pypi.org/project/diator/)**
+# SiKei - CQRS Library for Python
+**[Docs](https://akhundmurad.github.io/sikei/) | [PyPI](https://pypi.org/project/sikei/)**
 
-Diator is a Python library for implementing CQRS pattern in your Python applications. It provides a set of abstractions and utilities to help you separate your read and write concerns, allowing for better scalability, performance, and maintainability of your application.
+SiKei is a Python library for implementing CQRS pattern in your Python applications. It provides a set of abstractions and utilities to help you separate your read and write concerns, allowing for better scalability, performance, and maintainability of your application.
 
 ## Features :bulb:
 
@@ -28,10 +27,10 @@ Diator is a Python library for implementing CQRS pattern in your Python applicat
 
 ## Installation :triangular_ruler:
 
-Install the Diator library with [pip](https://pypi.org/project/diator/)
+Install the SiKei library with [pip](https://pypi.org/project/sikei/)
 
 ```bash
-pip install diator
+pip install sikei
 ```
 
 There are also several installation options:
@@ -39,28 +38,28 @@ There are also several installation options:
 - To use Redis as Message Broker
 
     ```bash
-    pip install diator[redis]
+    pip install sikei[redis]
     ```
 
 - Or Azure Service Bus
 
     ```bash
-    pip install diator[azure]
+    pip install sikei[azure]
     ```
 
 ## Simple Example :hammer_and_wrench:
 
-Minimal example of diator usage:
+Minimal example of sikei usage:
 
 ```python
 import asyncio
 from dataclasses import dataclass, field
 from di import Container, bind_by_type
 from di.dependent import Dependent
-from diator.events import EventMap, Event, EventEmitter
-from diator.container.di import DIContainer
-from diator.mediator import Mediator
-from diator.requests import Request, RequestHandler, RequestMap
+from sikei.events import EventMap, Event, EventEmitter
+from sikei.container.di import DIContainer
+from sikei.mesikei import Mesikei
+from sikei.requests import Request, RequestHandler, RequestMap
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -111,13 +110,13 @@ async def main() -> None:
         event_map=EventMap(), container=container, message_broker=None
     )
 
-    mediator = Mediator(
+    mesikei = Mesikei(
         request_map=request_map,
         event_emitter=event_emitter,
         container=container,
     )
 
-    await mediator.send(JoinMeetingCommand(user_id=1, meeting_id=1, is_late=True))
+    await mesikei.send(JoinMeetingCommand(user_id=1, meeting_id=1, is_late=True))
 
 
 if __name__ == "__main__":

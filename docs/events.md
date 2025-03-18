@@ -15,8 +15,8 @@ Domain events are handled by specialized handlers, whereas Notification and ECST
 Events are published in the `CommandHandler` side like below:
 
 ```python hl_lines="16-21"
-from diator.requests import RequestHandler
-from diator.events import EventHandler
+from sikei.requests import RequestHandler
+from sikei.events import EventHandler
 
 
 class JoinMeetingCommandHandler(RequestHandler[JoinMeetingCommand, None]):
@@ -46,7 +46,7 @@ Domain event is a message describing a significant event that has occurred in th
 Example:
 
 ```python
-from diator.events import DomainEvent
+from sikei.events import DomainEvent
 
 
 @dataclasses.dataclass(frozen=True, kw_only=True)
@@ -63,7 +63,7 @@ This event type is handled by its event handler.
 Event Handler is a component responsible for processing an Domain Event that has occurred in the application:
 
 ```python
-from diator.events import EventHandler
+from sikei.events import EventHandler
 
 
 class UserJoinedDomainEventHandler(EventHandler[UserJoinedDomainEvent]):
@@ -79,7 +79,7 @@ class UserJoinedDomainEventHandler(EventHandler[UserJoinedDomainEvent]):
 In order to map each domain event to its handler, you can use `EventMap` as below:
 
 ```python
-from diator.requests import EventMap
+from sikei.requests import EventMap
 
 
 event_map = EventMap()
@@ -94,7 +94,7 @@ Notification Event is a message regarding a change in the business domain that o
 Example:
 
 ```python
-from diator.events import NotificationEvent
+from sikei.events import NotificationEvent
 
 
 @dataclasses.dataclass(frozen=True, kw_only=True)
@@ -109,7 +109,7 @@ Event-carried state transfer (ECST) is a message that notifies subscribers about
 Example:
 
 ```python
-from diator.events import ECSTEvent
+from sikei.events import ECSTEvent
 
 
 @dataclasses.dataclass(frozen=True, kw_only=True)
@@ -125,8 +125,8 @@ class UserChangedECSTEvent(ECSTEvent):
 Here is a simple `EventEmitter` usage:
 
 ```python
-from diator.events import EventMap, EventEmitter
-from diator.mediator import Mediator
+from sikei.events import EventMap, EventEmitter
+from sikei.mesikei import Mesikei
 
 
 event_map = EventMap()
@@ -134,7 +134,7 @@ event_map.bind(UserJoinedDomainEvent, UserJoinedDomainEventHandler)
 event_map.bind(UserJoinedDomainEvent, AnotherUserJoinedDomainEventHandler)
 
 event_emitter = EventEmitter(event_map=event_map, container=container)
-mediator = Mediator(
+mesikei = Mesikei(
     event_emitter=event_emitter,
     request_map=request_map,
     container=container
@@ -144,7 +144,7 @@ mediator = Mediator(
 
 ## Message Broker
 
-Diator supports several message brokers to publish Notification and ECST events.
+sikei supports several message brokers to publish Notification and ECST events.
 Supported message brokers:
 
 - [Redis Pub/Sub](https://redis.io/docs/manual/pubsub/)
@@ -156,8 +156,8 @@ To use Redis Pub/Sub as message broker, simply import it and put to `EventEmitte
 
 ```python
 from redis.asyncio import Redis
-from diator.events import EventMap, EventEmitter
-from diator.message_brokers.redis import RedisMessageBroker
+from sikei.events import EventMap, EventEmitter
+from sikei.message_brokers.redis import RedisMessageBroker
 
 
 redis_client = Redis()
@@ -171,7 +171,7 @@ event_emitter = EventEmitter(
 )
 ```
 
-As a result, it will produce events in the channel with default prefix `python_diator_channel`.
+As a result, it will produce events in the channel with default prefix `python_sikei_channel`.
 
 Example of published event:
 
@@ -191,13 +191,13 @@ Example of published event:
 Channel name:
 
 ```bash
-python_diator_channel:notification_event:9f62e977-73f7-462b-92cb-8ea658d3bcb5
+python_sikei_channel:notification_event:9f62e977-73f7-462b-92cb-8ea658d3bcb5
 ```
 
 So, you can listen to specific event types by defining pattern of channel:
 
 ```bash
-PSUBSCRIBE python_diator_channel:notification_event:*
+PSUBSCRIBE python_sikei_channel:notification_event:*
 ```
 
 ### Azure Service Bus
@@ -206,8 +206,8 @@ To use Azure Service Bus as message broker, simply import it and put to `EventEm
 
 ```python
 from azure.servicebus.aio import ServiceBusClient
-from diator.events import EventMap, EventEmitter
-from diator.message_brokers.azure import AzureMessageBroker
+from sikei.events import EventMap, EventEmitter
+from sikei.message_brokers.azure import AzureMessageBroker
 
 
 azure_service_bus_client = ServiceBusClient.from_connection_string(

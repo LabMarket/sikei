@@ -1,16 +1,16 @@
 from typing import Type
 
-from diator.container.protocol import Container
-from diator.dispatcher import DefaultDispatcher, Dispatcher
-from diator.events import Event, EventEmitter
-from diator.middlewares import MiddlewareChain
-from diator.requests import Request, RequestMap
-from diator.response import Response
+from sikei.container.protocol import Container
+from sikei.dispatcher import DefaultDispatcher, Dispatcher
+from sikei.events import Event, EventEmitter
+from sikei.middlewares import MiddlewareChain
+from sikei.requests import Request, RequestMap
+from sikei.response import Response
 
 
-class Mediator:
+class Mesikei:
     """
-    The main mediator object.
+    The main mesikei object.
 
     Usage::
 
@@ -22,14 +22,14 @@ class Mediator:
       request_map.bind(JoinUserCommand, JoinUserCommandHandler)
       event_emitter = EventEmitter(event_map, container, message_broker)
 
-      mediator = Mediator(
+      mesikei = Mesikei(
         event_emitter=event_emitter,
         request_map=request_map,
         container=container
       )
 
       # Handles command and published events by the command handler.
-      await mediator.send(join_user_command)
+      await mesikei.send(join_user_command)
 
     """
 

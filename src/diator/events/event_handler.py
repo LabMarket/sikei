@@ -1,6 +1,6 @@
 from typing import Protocol, TypeVar
 
-from diator.events.event import DomainEvent
+from sikei.events.event import DomainEvent
 
 E = TypeVar("E", bound=DomainEvent, contravariant=True)
 

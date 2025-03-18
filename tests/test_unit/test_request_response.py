@@ -3,11 +3,10 @@ from typing import Type
 from uuid import UUID, uuid4
 
 import pytest
-
-from diator.events import Event, EventEmitter, EventMap
-from diator.mediator import Mediator
-from diator.requests import Request, RequestHandler, RequestMap
-from diator.response import Response
+from sikei.events import Event, EventEmitter, EventMap
+from sikei.mesikei import Mesikei
+from sikei.requests import Request, RequestHandler, RequestMap
+from sikei.response import Response
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -66,7 +65,7 @@ class TestContainer:
 
 
 @pytest.fixture
-def mediator() -> Mediator:
+def mesikei() -> Mesikei:
     event_emitter = EventEmitter(
         event_map=EventMap(),
         container=TestContainer(),  # type: ignore
@@ -74,19 +73,19 @@ def mediator() -> Mediator:
     request_map = RequestMap()
     request_map.bind(ReadMeetingDetailsQuery, ReadMeetingDetailsQueryHandler)
     request_map.bind(CloseMeetingRoomCommand, CloseMeetingRoomCommandHandler)
-    return Mediator(
+    return Mesikei(
         request_map=request_map,
         container=TestContainer(),  # type: ignore
         event_emitter=event_emitter,
     )
 
 
-async def test_sending_request_with_response(mediator: Mediator) -> None:
+async def test_sending_request_with_response(mesikei: Mesikei) -> None:
     handler = await TestContainer().resolve(ReadMeetingDetailsQueryHandler)
 
     assert not handler.called
 
-    response = await mediator.send(ReadMeetingDetailsQuery(meeting_room_id=uuid4()))
+    response = await mesikei.send(ReadMeetingDetailsQuery(meeting_room_id=uuid4()))
 
     assert handler.called
     assert response
@@ -94,10 +93,10 @@ async def test_sending_request_with_response(mediator: Mediator) -> None:
     assert response.meeting_room_id
 
 
-async def test_sending_request_without_response(mediator: Mediator) -> None:
+async def test_sending_request_without_response(mesikei: Mesikei) -> None:
     handler = await TestContainer().resolve(CloseMeetingRoomCommandHandler)
     assert not handler.called
 
-    await mediator.send(CloseMeetingRoomCommand(meeting_room_id=uuid4()))
+    await mesikei.send(CloseMeetingRoomCommand(meeting_room_id=uuid4()))
 
     assert handler.called

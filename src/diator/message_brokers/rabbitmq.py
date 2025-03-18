@@ -1,12 +1,9 @@
-import logging
 
-import orjson
 import aio_pika
-import asyncio
-from diator.message_brokers.protocol import Message
+import orjson
+from sikei.message_brokers.protocol import Message
 
 
-        
 class RabbitMQMessageBroker:
     def __init__(self, client, *, routing_key: str | None = None, exchange: str | None = None) -> None:
         self._connection = client

@@ -1,6 +1,5 @@
 from dependency_injector import containers, providers
-
-from diator.container.dependency_injector import DependencyInjectorContainer
+from sikei.container.dependency_injector import DependencyInjectorContainer
 
 
 class Dependency:

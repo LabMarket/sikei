@@ -3,8 +3,7 @@ from typing import Type, TypeVar
 import di
 from di.dependent import Dependent
 from di.executors import AsyncExecutor
-
-from diator.container.protocol import Container
+from sikei.container.protocol import Container
 
 T = TypeVar("T")
 

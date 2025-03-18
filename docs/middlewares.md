@@ -29,7 +29,7 @@ A middleware chain is a crucial component that serves as a storage for your midd
 Usage:
 
 ```python
-from diator.middlewares import MiddlewareChain
+from sikei.middlewares import MiddlewareChain
 
 
 class FirstMiddleware:
@@ -52,7 +52,7 @@ middleware_chain = MiddlewareChain()
 middleware_chain.add(FirstMiddleware())
 middleware_chain.add(SecondMiddleware())
 
-mediator = Mediator(
+mesikei = Mesikei(
     request_map=request_map,
     container=container,
     middleware_chain=middleware_chain,
@@ -78,14 +78,14 @@ We plan to provide several middlewares for common use cases. Currently, only log
 Simply import it:
 
 ```python
-from diator.middlewares import LoggingMiddleware
+from sikei.middlewares import LoggingMiddleware
 ```
 
 And then add it to the `MiddlewareChain`:
 
 ```python
-from diator.middlewares import MiddlewareChain
-from diator.middlewares.logging import LoggingMiddleware
+from sikei.middlewares import MiddlewareChain
+from sikei.middlewares.logging import LoggingMiddleware
 
 
 chain = MiddlewareChain()
@@ -95,8 +95,8 @@ chain.add(LoggingMiddleware())
 Result:
 
 ```bash
-DEBUG:diator.middlewares.logging:Request JoinMeetingRoomCommand handled. Response: None
-DEBUG:diator.events.event_emitter:Sending Notification Event(a9aab9b3-6a40-4caa-ba63-93d3f92bb11b) to message broker RedisMessageBroker
-DEBUG:diator.message_brokers.redis:Sending message to Redis Pub/Sub a9aab9b3-6a40-4caa-ba63-93d3f92bb11b.
-DEBUG:diator.events.event_emitter:Handling Event(UserJoinedDomainEvent) via event handler(UserJoinedEventHandler)
+DEBUG:sikei.middlewares.logging:Request JoinMeetingRoomCommand handled. Response: None
+DEBUG:sikei.events.event_emitter:Sending Notification Event(a9aab9b3-6a40-4caa-ba63-93d3f92bb11b) to message broker RedisMessageBroker
+DEBUG:sikei.message_brokers.redis:Sending message to Redis Pub/Sub a9aab9b3-6a40-4caa-ba63-93d3f92bb11b.
+DEBUG:sikei.events.event_emitter:Handling Event(UserJoinedDomainEvent) via event handler(UserJoinedEventHandler)
 ```

@@ -4,20 +4,19 @@ from dataclasses import dataclass
 
 from redis import asyncio as redis
 from rodi import Container
-
-from diator.container.rodi import RodiContainer
-from diator.events import (
+from sikei.container.rodi import RodiContainer
+from sikei.events import (
     DomainEvent,
     EventEmitter,
     EventHandler,
     EventMap,
     NotificationEvent,
 )
-from diator.mediator import Mediator
-from diator.message_brokers.redis import RedisMessageBroker
-from diator.middlewares import MiddlewareChain
-from diator.middlewares.logging import LoggingMiddleware
-from diator.requests import Request, RequestHandler, RequestMap
+from sikei.mesikei import Mesikei
+from sikei.message_brokers.redis import RedisMessageBroker
+from sikei.middlewares import MiddlewareChain
+from sikei.middlewares.logging import LoggingMiddleware
+from sikei.requests import Request, RequestHandler, RequestMap
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -102,14 +101,14 @@ async def main() -> None:
         container=container,
     )
 
-    mediator = Mediator(
+    mesikei = Mesikei(
         request_map=request_map,
         event_emitter=event_emitter,
         container=container,
         middleware_chain=middleware_chain,
     )
 
-    await mediator.send(JoinMeetingRoomCommand(user_id=1))
+    await mesikei.send(JoinMeetingRoomCommand(user_id=1))
 
 
 if __name__ == "__main__":

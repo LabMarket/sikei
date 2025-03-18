@@ -1,8 +1,8 @@
 import logging
 from typing import Awaitable, Callable, Mapping, Protocol, TypeVar
 
-from diator.requests import Request
-from diator.response import Response
+from sikei.requests import Request
+from sikei.response import Response
 
 Req = TypeVar("Req", bound=Request, contravariant=True)
 Res = TypeVar("Res", Response, None, covariant=True)

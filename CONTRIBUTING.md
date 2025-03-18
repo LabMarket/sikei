@@ -1,6 +1,6 @@
 # Contributing
 
-This page discribes how to contribute to Diator.
+This page discribes how to contribute to SiKei.
 
 ## Requirements
 
@@ -10,7 +10,7 @@ This page discribes how to contribute to Diator.
 
 ## Environment preparation
 
-1. fork the [repository](https://github.com/akhundMurad/diator)
+1. fork the [repository](https://github.com/LabMarket/sikei)
 2. clone the forked repository
 3. create a Python virtual environment in the desired location:
 

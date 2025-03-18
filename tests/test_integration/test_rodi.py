@@ -1,6 +1,5 @@
 from rodi import Container
-
-from diator.container.rodi import RodiContainer
+from sikei.container.rodi import RodiContainer
 
 
 class Dependency:

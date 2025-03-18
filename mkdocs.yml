@@ -1,6 +1,6 @@
-site_name: "Diator"
-site_description: Diator is a Python library for implementing CQRS pattern in your Python applications.
-site_url: https://akhundmurad.github.io/diator/
+site_name: "SiKei"
+site_description: SiKei is a Python library for implementing CQRS pattern in your Python applications forked from Diator (https://akhundmurad.github.io/diator/).
+site_url: https://github.com/LabMarket/sikei/
 
 theme:
   name: "material"
@@ -22,8 +22,8 @@ theme:
         icon: "material/weather-sunny"
         name: "Switch to light mode"
 
-repo_name: akhundMurad/diator
-repo_url: https://github.com/akhundMurad/diator
+repo_name: LabMarket/sikei
+repo_url: https://github.com/LabMarket/sikei
 edit_uri: "blob/main/docs/"
 
 nav:

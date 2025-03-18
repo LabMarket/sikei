@@ -9,8 +9,8 @@ There are two types of requests in the CQRS: `Command`, `Query`.
 Command represents an intention to perform an action or change the state of an application. Here is an example of the Command:
 
 ```python
-from diator.requests import Request
-from diator.response import Response
+from sikei.requests import Request
+from sikei.response import Response
 
 
 @dataclasses.dataclass(frozen=True, kw_only=True)
@@ -26,8 +26,8 @@ We define `frozen=True`, since all requests should be immutable by definition.
 Command Handler is a component responsible for handling a Command and executing the corresponding action:
 
 ```python
-from diator.requests import RequestHandler
-from diator.events import EventHandler
+from sikei.requests import RequestHandler
+from sikei.events import EventHandler
 
 
 class JoinMeetingCommandHandler(RequestHandler[JoinMeetingCommand, None]):
@@ -48,7 +48,7 @@ class JoinMeetingCommandHandler(RequestHandler[JoinMeetingCommand, None]):
 Query represents a request for information or data from the application's read model. The process of handling queries **SHOULD NOT** modify the state of the application:
 
 ```python
-from diator.requests import Request
+from sikei.requests import Request
 
 
 @dataclasses.dataclass(frozen=True, kw_only=True)
@@ -61,7 +61,7 @@ class ReadMeetingQuery(Request)
 Query Result is an object that contains the data requested by a Query. It is returned by a Query Handler after it processes a Query against the read model:
 
 ```python
-from diator.response import Response
+from sikei.response import Response
 
 @dataclasses.dataclass(frozen=True, kw_only=True)
 class ReadMeetingQueryResult(Response)
@@ -74,7 +74,7 @@ class ReadMeetingQueryResult(Response)
 Query Handler is a component responsible for processing a Query against the read model and returning the requested data as a Query Result:
 
 ```python
-from diator.requests import RequestHandler
+from sikei.requests import RequestHandler
 
 
 class ReadMeetingQueryHandler(RequestHandler[ReadMeetingQuery, ReadMeetingQueryResult]):
@@ -99,7 +99,7 @@ class ReadMeetingQueryHandler(RequestHandler[ReadMeetingQuery, ReadMeetingQueryR
 In order to map each request to its handler, you can use `RequestMap` as below:
 
 ```python
-from diator.requests import RequestMap
+from sikei.requests import RequestMap
 
 
 request_map = RequestMap()
@@ -108,16 +108,16 @@ request_map.bind(ReadMeetingQuery, ReadMeetingQueryHandler)
 
 ```
 
-And then, put it to `Mediator`:
+And then, put it to `Mesikei`:
 
 ```python hl_lines="9"
-from diator.mediator import Mediator
-from diator.requests import RequestMap
+from sikei.mesikei import Mesikei
+from sikei.requests import RequestMap
 
 
 request_map = RequestMap()
 request_map.bind(JoinMeetingCommand, JoinMeetingCommandHandler)
 request_map.bind(ReadMeetingQuery, ReadMeetingQueryHandler)
 
-mediator = Mediator(request_map=request_map, container=container)
+mesikei = Mesikei(request_map=request_map, container=container)
 ```

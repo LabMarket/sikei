@@ -4,16 +4,15 @@ from typing import Optional
 import pytest
 import redis.asyncio as redis
 from aio_pika.abc import AbstractIncomingMessage
-
-from diator.message_brokers.rabbitmq import Message, RabbitMQMessageBroker
-from diator.message_brokers.redis import RedisMessageBroker
+from sikei.message_brokers.rabbitmq import Message, RabbitMQMessageBroker
+from sikei.message_brokers.redis import RedisMessageBroker
 
 
 async def test_redis_message_broker_publish_event(
     redis_message_broker: RedisMessageBroker, redis_client: redis.Redis
 ) -> None:
     async with redis_client.pubsub() as pubsub:
-        await pubsub.psubscribe("test_diator_channel:*")
+        await pubsub.psubscribe("test_sikei_channel:*")
 
         message = Message(payload={"phrase": "hello"}, message_type="", message_name="")
         await redis_message_broker.send_message(message=message)
@@ -36,7 +35,7 @@ async def test_rabbitmq_message_broker_publish_event(
         
         channel = await connection.channel()
         await channel.set_qos(prefetch_count=100)
-        queue = await channel.declare_queue("test_diator_queue")
+        queue = await channel.declare_queue("test_sikei_queue")
 
         message = Message(payload={"phrase": "hello"}, message_type="", message_name="")
         await rabbitmq_message_broker.send_message(message=message)

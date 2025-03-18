@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "diator"
+name = "sikei"
 version = "0.1.2"
 authors = [{ name = "Murad Akhundov", email = "akhundov1murad@gmail.com" },
            { name = "José Marcos Gomes", email = "jose.marcos.gomes@gmail.com" }]
@@ -23,6 +23,7 @@ dependencies = ["orjson", "dataclass_factory"]
 
 keywords = [
   "diator",
+  "sikei",
   "CQRS",
   "event",
   "command",
@@ -60,8 +61,8 @@ exclude = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/jm4rc05/diator"
-"Bug Tracker" = "https://github.com/jm4rc05/diator/issues"
+"Homepage" = "https://github.com/LabMarket/sikei.git"
+"Bug Tracker" = "https://github.com/LabMarket/sikei/issues"
 
 [project.optional-dependencies]
 redis = ["redis"]

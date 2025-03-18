@@ -1,5 +1,5 @@
-from diator.requests.map import RequestMap
-from diator.requests.request import Request
-from diator.requests.request_handler import RequestHandler
+from sikei.requests.map import RequestMap
+from sikei.requests.request import Request
+from sikei.requests.request_handler import RequestHandler
 
 __all__ = ("RequestMap", "Request", "RequestHandler")

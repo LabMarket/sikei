@@ -11,7 +11,7 @@ on:
       - CHANGELOG.md
 
 env:
-  PROJECT_NAME: diator
+  PROJECT_NAME: sikei
 
 jobs:
   build:

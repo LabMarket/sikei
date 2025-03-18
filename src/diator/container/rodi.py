@@ -1,8 +1,7 @@
 from typing import Type, TypeVar
 
 import rodi
-
-from diator.container.protocol import Container
+from sikei.container.protocol import Container
 
 T = TypeVar("T")
 

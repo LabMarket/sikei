@@ -1,8 +1,8 @@
-from diator.container.protocol import Container
-from diator.dispatcher.dispatch_result import DispatchResult
-from diator.middlewares.base import MiddlewareChain
-from diator.requests.map import RequestMap
-from diator.requests.request import Request
+from sikei.container.protocol import Container
+from sikei.dispatcher.dispatch_result import DispatchResult
+from sikei.middlewares.base import MiddlewareChain
+from sikei.requests.map import RequestMap
+from sikei.requests.request import Request
 
 
 class DefaultDispatcher:

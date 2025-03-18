@@ -1,7 +1,7 @@
-from diator.events.event import DomainEvent, ECSTEvent, Event, NotificationEvent
-from diator.events.event_emitter import EventEmitter
-from diator.events.event_handler import EventHandler
-from diator.events.map import EventMap
+from sikei.events.event import DomainEvent, ECSTEvent, Event, NotificationEvent
+from sikei.events.event_emitter import EventEmitter
+from sikei.events.event_handler import EventHandler
+from sikei.events.map import EventMap
 
 __all__ = (
     "Event",

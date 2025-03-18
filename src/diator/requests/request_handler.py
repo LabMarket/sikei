@@ -1,8 +1,8 @@
 from typing import Protocol, TypeVar
 
-from diator.events.event import Event
-from diator.requests.request import Request
-from diator.response import Response
+from sikei.events.event import Event
+from sikei.requests.request import Request
+from sikei.response import Response
 
 Req = TypeVar("Req", bound=Request, contravariant=True)
 Res = TypeVar("Res", Response, None, covariant=True)

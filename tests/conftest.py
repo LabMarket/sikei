@@ -1,9 +1,8 @@
 import aio_pika
 import pytest
 import redis.asyncio as redis
-
-from diator.message_brokers.rabbitmq import RabbitMQMessageBroker
-from diator.message_brokers.redis import RedisMessageBroker
+from sikei.message_brokers.rabbitmq import RabbitMQMessageBroker
+from sikei.message_brokers.redis import RedisMessageBroker
 
 
 @pytest.fixture()
@@ -13,7 +12,7 @@ def redis_client() -> redis.Redis:
 
 @pytest.fixture()
 def redis_message_broker(redis_client: redis.Redis) -> RedisMessageBroker:
-    return RedisMessageBroker(client=redis_client, channel_prefix="test_diator_channel")
+    return RedisMessageBroker(client=redis_client, channel_prefix="test_sikei_channel")
 
 @pytest.fixture()
 async def rabbitmq_client() -> aio_pika.Connection:
@@ -27,4 +26,4 @@ async def rabbitmq_client_subs() -> aio_pika.Connection:
 
 @pytest.fixture()
 def rabbitmq_message_broker(rabbitmq_client: aio_pika.Connection) -> RabbitMQMessageBroker:
-    return RabbitMQMessageBroker(client=rabbitmq_client, routing_key="test_diator_queue")
+    return RabbitMQMessageBroker(client=rabbitmq_client, routing_key="test_sikei_queue")

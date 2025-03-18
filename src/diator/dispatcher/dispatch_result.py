@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 
-from diator.events.event import Event
-from diator.response import Response
+from sikei.events.event import Event
+from sikei.response import Response
 
 
 @dataclass

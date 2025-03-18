@@ -1,7 +1,7 @@
 from typing import Protocol
 
-from diator.dispatcher.dispatch_result import DispatchResult
-from diator.requests.request import Request
+from sikei.dispatcher.dispatch_result import DispatchResult
+from sikei.requests.request import Request
 
 
 class Dispatcher(Protocol):

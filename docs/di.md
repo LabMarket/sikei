@@ -2,9 +2,9 @@
 
 Dependency Injection pattern (DI) separates the concerns of constructing objects and using them, leading to loosely coupled programs.
 
-## Usage in Diator
+## Usage in SiKei
 
-In Diator, dependency injection is implemented via special `Container` class, which is literally an abstraction over various dependency injection frameworks. This allows developers to easily manage dependencies and decouple components, leading to more modular and maintainable code. Currently, Diator supports two popular DI-frameworks, [adriangb/di](https://github.com/adriangb/di) and [Neoteroi/rodi](https://github.com/Neoteroi/rodi), but we plan to expand support for other frameworks in the future.
+In SiKei, dependency injection is implemented via special `Container` class, which is literally an abstraction over various dependency injection frameworks. This allows developers to easily manage dependencies and decouple components, leading to more modular and maintainable code. Currently, SiKei supports two popular DI-frameworks, [adriangb/di](https://github.com/adriangb/di) and [Neoteroi/rodi](https://github.com/Neoteroi/rodi), but we plan to expand support for other frameworks in the future.
 
 ## Neoteroi/rodi
 
@@ -23,12 +23,12 @@ Configure by 2 steps:
         container.register(JoinMeetingRoomCommandHandler)
     ```
 
-2. Integrate with Diator:
+2. Integrate with SiKei:
 
     ```python hl_lines="3 12-13"
     from rodi import Container
 
-    from diator.container.rodi import RodiContainer
+    from sikei.container.rodi import RodiContainer
 
 
     def configure_di() -> RodiContainer:
@@ -66,13 +66,13 @@ Configure by 2 steps:
         )
     ```
 
-2. Integrate with Diator:
+2. Integrate with SiKei:
 
     ```python hl_lines="4 18-19"
     from di import Container, bind_by_type
     from di.dependent import Dependent
 
-    from diator.container.di import DIContainer
+    from sikei.container.di import DIContainer
 
 
     def configure_di() -> DIContainer:
