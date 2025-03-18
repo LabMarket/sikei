@@ -1,8 +1,6 @@
 name: CI
 
-on:
-  schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight UTC
+on: [pull_request]
 
 jobs:
   lint:
