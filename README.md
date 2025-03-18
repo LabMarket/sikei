@@ -15,7 +15,7 @@
 # SiKei - CQRS Library for Python
 **[Docs](https://akhundmurad.github.io/sikei/) | [PyPI](https://pypi.org/project/sikei/)**
 
-SiKei is a Python library for implementing CQRS pattern in your Python applications. It provides a set of abstractions and utilities to help you separate your read and write concerns, allowing for better scalability, performance, and maintainability of your application.
+SiKei is a Python library for implementing CQRS pattern in your Python applications forked from Diator (https://akhundmurad.github.io/diator/). It provides a set of abstractions and utilities to help you separate your read and write concerns, allowing for better scalability, performance, and maintainability of your application.
 
 ## Features :bulb:
 
