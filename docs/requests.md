@@ -108,10 +108,10 @@ request_map.bind(ReadMeetingQuery, ReadMeetingQueryHandler)
 
 ```
 
-And then, put it to `Mesikei`:
+And then, put it to `Mediator`:
 
 ```python hl_lines="9"
-from sikei.mediator import Mesikei
+from sikei.mediator import Mediator
 from sikei.requests import RequestMap
 
 
@@ -119,5 +119,5 @@ request_map = RequestMap()
 request_map.bind(JoinMeetingCommand, JoinMeetingCommandHandler)
 request_map.bind(ReadMeetingQuery, ReadMeetingQueryHandler)
 
-mediator = Mesikei(request_map=request_map, container=container)
+mediator = Mediator(request_map=request_map, container=container)
 ```

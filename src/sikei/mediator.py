@@ -8,7 +8,7 @@ from sikei.requests import Request, RequestMap
 from sikei.response import Response
 
 
-class Mesikei:
+class Mediator:
     """
     The main mediator object.
 
@@ -22,7 +22,7 @@ class Mesikei:
       request_map.bind(JoinUserCommand, JoinUserCommandHandler)
       event_emitter = EventEmitter(event_map, container, message_broker)
 
-      mediator = Mesikei(
+      mediator = Mediator(
         event_emitter=event_emitter,
         request_map=request_map,
         container=container

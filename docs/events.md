@@ -126,7 +126,7 @@ Here is a simple `EventEmitter` usage:
 
 ```python
 from sikei.events import EventMap, EventEmitter
-from sikei.mediator import Mesikei
+from sikei.mediator import Mediator
 
 
 event_map = EventMap()
@@ -134,7 +134,7 @@ event_map.bind(UserJoinedDomainEvent, UserJoinedDomainEventHandler)
 event_map.bind(UserJoinedDomainEvent, AnotherUserJoinedDomainEventHandler)
 
 event_emitter = EventEmitter(event_map=event_map, container=container)
-mediator = Mesikei(
+mediator = Mediator(
     event_emitter=event_emitter,
     request_map=request_map,
     container=container

@@ -6,7 +6,7 @@ from rodi import Container, ServiceLifeStyle
 
 from sikei.container.rodi import RodiContainer
 from sikei.events import EventEmitter, EventMap
-from sikei.mediator import Mesikei
+from sikei.mediator import Mediator
 from sikei.message_brokers.redis import RedisMessageBroker
 from sikei.middlewares import MiddlewareChain
 from sikei.requests import Request, RequestHandler, RequestMap
@@ -40,7 +40,7 @@ class TestMiddleware:
 
 
 @pytest.fixture
-def mediator(redis_client) -> Mesikei:
+def mediator(redis_client) -> Mediator:
     container = Container()
     container.register_factory(
         lambda: redis_client,
@@ -64,7 +64,7 @@ def mediator(redis_client) -> Mesikei:
         container=rodi_container,
     )
 
-    return Mesikei(
+    return Mediator(
         request_map=request_map,
         event_emitter=event_emitter,
         container=rodi_container,
@@ -73,7 +73,7 @@ def mediator(redis_client) -> Mesikei:
 
 
 @pytest.fixture
-def mediator_without_broker(redis_client) -> Mesikei:
+def mediator_without_broker(redis_client) -> Mediator:
     container = Container()
     container.register_factory(
         lambda: redis_client,
@@ -95,7 +95,7 @@ def mediator_without_broker(redis_client) -> Mesikei:
         container=rodi_container,
     )
 
-    return Mesikei(
+    return Mediator(
         request_map=request_map,
         event_emitter=event_emitter,
         container=rodi_container,
@@ -104,7 +104,7 @@ def mediator_without_broker(redis_client) -> Mesikei:
 
 
 @pytest.fixture
-def mediator_without_event_emitter(redis_client) -> Mesikei:
+def mediator_without_event_emitter(redis_client) -> Mediator:
     container = Container()
     container.register_factory(
         lambda: redis_client,
@@ -121,14 +121,14 @@ def mediator_without_event_emitter(redis_client) -> Mesikei:
     middleware_chain = MiddlewareChain()
     middleware_chain.add(TestMiddleware())
 
-    return Mesikei(
+    return Mediator(
         request_map=request_map,
         container=rodi_container,
         middleware_chain=middleware_chain,
     )
 
 
-async def test_send_command_with_middleware(redis_client: redis.Redis, mediator: Mesikei):
+async def test_send_command_with_middleware(redis_client: redis.Redis, mediator: Mediator):
     await mediator.send(JoinMeetingRoomCommand(user_id=1, meeting_id=1))
 
     value = await redis_client.get("1")
@@ -136,9 +136,9 @@ async def test_send_command_with_middleware(redis_client: redis.Redis, mediator:
     assert value == b"1"
 
 
-async def test_mediator_without_message_broker(mediator_without_broker: Mesikei) -> None:
+async def test_mediator_without_message_broker(mediator_without_broker: Mediator) -> None:
     await mediator_without_broker.send(JoinMeetingRoomCommand(user_id=1, meeting_id=1))
 
 
-async def test_mediator_without_message_event_emitter(mediator_without_event_emitter: Mesikei) -> None:
+async def test_mediator_without_message_event_emitter(mediator_without_event_emitter: Mediator) -> None:
     await mediator_without_event_emitter.send(JoinMeetingRoomCommand(user_id=1, meeting_id=1))

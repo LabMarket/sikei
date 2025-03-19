@@ -13,7 +13,7 @@ from sikei.events import (
     EventMap,
     NotificationEvent,
 )
-from sikei.mediator import Mesikei
+from sikei.mediator import Mediator
 from sikei.message_brokers.redis import RedisMessageBroker
 from sikei.middlewares import MiddlewareChain
 from sikei.middlewares.logging import LoggingMiddleware
@@ -102,7 +102,7 @@ async def main() -> None:
         container=container,
     )
 
-    mediator = Mesikei(
+    mediator = Mediator(
         request_map=request_map,
         event_emitter=event_emitter,
         container=container,

@@ -52,7 +52,7 @@ middleware_chain = MiddlewareChain()
 middleware_chain.add(FirstMiddleware())
 middleware_chain.add(SecondMiddleware())
 
-mediator = Mesikei(
+mediator = Mediator(
     request_map=request_map,
     container=container,
     middleware_chain=middleware_chain,

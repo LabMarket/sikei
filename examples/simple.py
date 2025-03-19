@@ -6,7 +6,7 @@ from di.dependent import Dependent
 
 from sikei.container.di import DIContainer
 from sikei.events import Event, EventEmitter, EventMap
-from sikei.mediator import Mesikei
+from sikei.mediator import Mediator
 from sikei.requests import Request, RequestHandler, RequestMap
 
 
@@ -56,7 +56,7 @@ async def main() -> None:
 
     event_emitter = EventEmitter(event_map=EventMap(), container=container, message_broker=None)
 
-    mediator = Mesikei(
+    mediator = Mediator(
         request_map=request_map,
         event_emitter=event_emitter,
         container=container,
