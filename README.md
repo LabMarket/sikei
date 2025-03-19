@@ -132,3 +132,16 @@ if __name__ == "__main__":
 ## License
 
 This project is licensed under the terms of the MIT license.
+
+
+# UV
+
+Using UV to sync, build and publish
+
+```sh
+uv sync
+uv build
+uv publish
+```
+
+> Inform `__token__` and use token created at pypi.org
