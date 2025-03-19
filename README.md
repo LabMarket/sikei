@@ -2,9 +2,6 @@
 <a href="https://github.com/LabMarket/sikei/actions?query=setup%3ACI%2FCD+event%3Apush+branch%3Adev" target="_blank">
     <img src="https://github.com/LabMarket/sikei/actions/workflows/ci.yml/badge.svg?branch=dev" alt="Test">
 </a>
-<a href="https://pepy.tech/project/sikei" target="_blank">
-    <img src="https://static.pepy.tech/personalized-badge/sikei?period=total&units=international_system&left_color=black&right_color=red&left_text=downloads" alt="Downloads">
-</a>
 <a href="https://pypi.org/project/sikei" target="_blank">
     <img src="https://img.shields.io/pypi/v/sikei?color=red&labelColor=black" alt="Package version">
 </a>
