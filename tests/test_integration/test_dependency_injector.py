@@ -1,6 +1,6 @@
 from dependency_injector import containers, providers
 
-from sikei.container.dependency_injector import DependencyInjectorContainer
+from sikei.container.injector import DependencyInjectorContainer
 
 
 class Dependency:
