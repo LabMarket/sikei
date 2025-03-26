@@ -94,7 +94,7 @@ async def main() -> None:
     request_map.bind(JoinMeetingRoomCommand, JoinMeetingRoomCommandHandler)
     container = configure_di()
 
-    redis_client = redis.Redis.from_url("redis://localhost:6379/0")
+    redis_client = redis.Redis.from_url("redis://broker:p4ssw0rd@127.0.0.1:6379/3")
 
     event_emitter = EventEmitter(
         message_broker=RedisMessageBroker(redis_client),

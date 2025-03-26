@@ -68,7 +68,7 @@ class SecondMiddleware:
         return response
 
 
-def configure_di() -> DIContainer:
+def configure() -> DIContainer:
     container = Container()
 
     container.bind(bind_by_type(Dependent(UserJoinedEventHandler, scope="request"), UserJoinedEventHandler))
@@ -93,9 +93,10 @@ async def main() -> None:
     event_map.bind(UserJoinedDomainEvent, UserJoinedEventHandler)
     request_map = RequestMap()
     request_map.bind(JoinMeetingRoomCommand, JoinMeetingRoomCommandHandler)
-    container = configure_di()
+    
+    container = configure()
 
-    redis_client: redis.Redis = redis.Redis.from_url("redis://localhost:6379/0")
+    redis_client: redis.Redis = redis.Redis.from_url("redis://broker:p4ssw0rd@127.0.0.1:6379/3")
 
     event_emitter = EventEmitter(
         message_broker=RedisMessageBroker(redis_client),

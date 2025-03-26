@@ -1,4 +1,5 @@
 from dependency_injector import containers, providers
+
 from sikei.container.dependency_injector import DependencyInjectorContainer
 
 
@@ -12,10 +13,10 @@ async def test_dependency_injector_container_resolve() -> None:
 
     external_container = ExternalContainer()
 
-    di_container = DependencyInjectorContainer()
-    di_container.attach_external_container(external_container)
+    container = DependencyInjectorContainer()
+    container.attach_external_container(external_container)
 
-    resolved = await di_container.resolve(Dependency)
+    resolved = await container.resolve(Dependency)
 
     assert isinstance(resolved, Dependency)
 
