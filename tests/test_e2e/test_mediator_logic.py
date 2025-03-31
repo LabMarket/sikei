@@ -4,10 +4,10 @@ import pytest
 from redis import asyncio as redis
 from rodi import Container, ServiceLifeStyle
 
+from sikei.brokers.redis import RedisMessageBroker
 from sikei.container.rodi import RodiContainer
 from sikei.events import EventEmitter, EventMap
 from sikei.mediator import Mediator
-from sikei.message_brokers.redis import RedisMessageBroker
 from sikei.middlewares import MiddlewareChain
 from sikei.requests import Request, RequestHandler, RequestMap
 

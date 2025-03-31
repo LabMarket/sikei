@@ -6,10 +6,10 @@ from datetime import timedelta
 import rodi
 from azure.servicebus.aio import ServiceBusClient
 
+from sikei.brokers.azure import AzureMessageBroker
 from sikei.container.rodi import RodiContainer
 from sikei.events import EventEmitter, EventMap, NotificationEvent
 from sikei.mediator import Mediator
-from sikei.message_brokers.azure import AzureMessageBroker
 from sikei.requests import Request, RequestHandler, RequestMap
 
 

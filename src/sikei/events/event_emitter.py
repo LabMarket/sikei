@@ -2,10 +2,11 @@ import logging
 from functools import singledispatchmethod
 
 from dataclass_factory import Factory
+
+from sikei.brokers.protocol import Message, MessageBroker
 from sikei.container.protocol import Container
 from sikei.events.event import DomainEvent, ECSTEvent, Event, NotificationEvent
 from sikei.events.map import EventMap
-from sikei.message_brokers.protocol import Message, MessageBroker
 
 logger = logging.getLogger(__name__)
 

@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from dependency_injector import containers, providers
 from redis import asyncio as redis
 
+from sikei.brokers.redis import RedisMessageBroker
 from sikei.container.injector import DependencyInjectorContainer
 from sikei.events import (
     DomainEvent,
@@ -14,7 +15,6 @@ from sikei.events import (
     NotificationEvent,
 )
 from sikei.mediator import Mediator
-from sikei.message_brokers.redis import RedisMessageBroker
 from sikei.middlewares import MiddlewareChain
 from sikei.requests import Request, RequestHandler, RequestMap
 
@@ -79,21 +79,11 @@ class SecondMiddleware:
         print("After 2 handling...")
         return response
 
+class JoinMeetingRoomCommandHandlerContainer(containers.DeclarativeContainer):
+    dependency = providers.Factory(JoinMeetingRoomCommandHandler)
 
-def configure() -> containers.Container:
-
-    class JoinMeetingRoomCommandHandlerContainer(containers.DeclarativeContainer):
-        dependency = providers.Factory(JoinMeetingRoomCommandHandler)
-
-    class UserJoinedEventHandlerContainer(containers.DeclarativeContainer):
-        dependency = providers.Factory(UserJoinedEventHandler)
-    
-    di_container = DependencyInjectorContainer()
-    di_container.attach_external_container(JoinMeetingRoomCommandHandlerContainer())
-    di_container.attach_external_container(UserJoinedEventHandlerContainer())
-    
-    return di_container
-
+class UserJoinedEventHandlerContainer(containers.DeclarativeContainer):
+    dependency = providers.Factory(UserJoinedEventHandler)
 
 async def main() -> None:
     middleware_chain = MiddlewareChain()
@@ -104,7 +94,12 @@ async def main() -> None:
     request_map = RequestMap()
     request_map.bind(JoinMeetingRoomCommand, JoinMeetingRoomCommandHandler)
 
-    container = configure()
+
+    
+    container = DependencyInjectorContainer()
+    container.attach_external_container(JoinMeetingRoomCommandHandlerContainer())
+    container.attach_external_container(UserJoinedEventHandlerContainer())
+    
 
     redis_client: redis.Redis = redis.Redis.from_url("redis://broker:p4ssw0rd@127.0.0.1:6379/3")
 

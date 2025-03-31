@@ -4,8 +4,9 @@ from typing import Optional
 import pytest
 import redis.asyncio as redis
 from aio_pika.abc import AbstractIncomingMessage
-from sikei.message_brokers.rabbitmq import Message, RabbitMQMessageBroker
-from sikei.message_brokers.redis import RedisMessageBroker
+
+from sikei.brokers.rabbitmq import Message, RabbitMQMessageBroker
+from sikei.brokers.redis import RedisMessageBroker
 
 
 async def test_redis_message_broker_publish_event(

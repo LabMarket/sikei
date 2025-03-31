@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from redis import asyncio as redis
 from rodi import Container
 
+from sikei.brokers.redis import RedisMessageBroker
 from sikei.container.rodi import RodiContainer
 from sikei.events import (
     DomainEvent,
@@ -14,7 +15,6 @@ from sikei.events import (
     NotificationEvent,
 )
 from sikei.mediator import Mediator
-from sikei.message_brokers.redis import RedisMessageBroker
 from sikei.middlewares import MiddlewareChain
 from sikei.middlewares.logging import LoggingMiddleware
 from sikei.requests import Request, RequestHandler, RequestMap

@@ -157,7 +157,7 @@ To use Redis Pub/Sub as message broker, simply import it and put to `EventEmitte
 ```python
 from redis.asyncio import Redis
 from sikei.events import EventMap, EventEmitter
-from sikei.message_brokers.redis import RedisMessageBroker
+from sikei.brokers.redis import RedisMessageBroker
 
 
 redis_client = Redis()
@@ -207,7 +207,7 @@ To use Azure Service Bus as message broker, simply import it and put to `EventEm
 ```python
 from azure.servicebus.aio import ServiceBusClient
 from sikei.events import EventMap, EventEmitter
-from sikei.message_brokers.azure import AzureMessageBroker
+from sikei.brokers.azure import AzureMessageBroker
 
 
 azure_service_bus_client = ServiceBusClient.from_connection_string(

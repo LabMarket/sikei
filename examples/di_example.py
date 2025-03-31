@@ -5,6 +5,7 @@ from di import Container, bind_by_type
 from di.dependent import Dependent
 from redis import asyncio as redis
 
+from sikei.brokers.redis import RedisMessageBroker
 from sikei.container.di import DIContainer
 from sikei.events import (
     DomainEvent,
@@ -14,7 +15,6 @@ from sikei.events import (
     NotificationEvent,
 )
 from sikei.mediator import Mediator
-from sikei.message_brokers.redis import RedisMessageBroker
 from sikei.middlewares import MiddlewareChain
 from sikei.requests import Request, RequestHandler, RequestMap
 

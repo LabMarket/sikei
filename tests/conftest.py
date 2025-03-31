@@ -2,8 +2,8 @@ import aio_pika
 import pytest
 import redis.asyncio as redis
 
-from sikei.message_brokers.rabbitmq import RabbitMQMessageBroker
-from sikei.message_brokers.redis import RedisMessageBroker
+from sikei.brokers.rabbitmq import RabbitMQMessageBroker
+from sikei.brokers.redis import RedisMessageBroker
 
 
 @pytest.fixture()
