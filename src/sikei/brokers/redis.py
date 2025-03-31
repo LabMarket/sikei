@@ -2,7 +2,8 @@ import logging
 
 import orjson
 from redis.asyncio import Redis
-from sikei.message_brokers.protocol import Message
+
+from sikei.brokers.protocol import Message
 
 logger = logging.getLogger(__name__)
 

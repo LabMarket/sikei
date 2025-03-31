@@ -1,7 +1,8 @@
 
 import aio_pika
 import orjson
-from sikei.message_brokers.protocol import Message
+
+from sikei.brokers.protocol import Message
 
 
 class RabbitMQMessageBroker:

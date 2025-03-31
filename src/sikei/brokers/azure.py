@@ -1,7 +1,8 @@
 import orjson
 from azure.servicebus import ServiceBusMessage
 from azure.servicebus.aio import ServiceBusClient
-from sikei.message_brokers.protocol import Message
+
+from sikei.brokers.protocol import Message
 
 
 class AzureMessageBroker:
