@@ -18,4 +18,4 @@ class RabbitMQMessageBroker:
             if self._exchange:
                 await channel.basic_publish(exchange=self._exchange,body=aio_pika.Message(body=orjson.dumps(message)),routing_key=self._routing_key)
             else:
-                await channel.default_exchange.publish(aio_pika.Message(body=orjson.dumps(message)),routing_key=self._routing_key)
+                await channel.default_exchange.publish(aio_pika.Message(body=orjson.dumps(message.model_dump())),routing_key=self._routing_key)

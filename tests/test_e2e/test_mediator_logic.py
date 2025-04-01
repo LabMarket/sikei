@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 
 import pytest
 from redis import asyncio as redis
@@ -12,7 +11,6 @@ from sikei.middlewares import MiddlewareChain
 from sikei.requests import Request, RequestHandler, RequestMap
 
 
-@dataclass(frozen=True, kw_only=True)
 class JoinMeetingRoomCommand(Request):
     meeting_id: int
     user_id: int

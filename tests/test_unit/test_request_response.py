@@ -1,4 +1,3 @@
-from dataclasses import dataclass, field
 from typing import Type
 from uuid import UUID, uuid4
 
@@ -10,9 +9,8 @@ from sikei.requests import Request, RequestHandler, RequestMap
 from sikei.response import Response
 
 
-@dataclass(frozen=True, kw_only=True)
 class CloseMeetingRoomCommand(Request):
-    meeting_room_id: UUID = field()
+    meeting_room_id: UUID
 
 
 class CloseMeetingRoomCommandHandler(RequestHandler[CloseMeetingRoomCommand, None]):
@@ -28,14 +26,12 @@ class CloseMeetingRoomCommandHandler(RequestHandler[CloseMeetingRoomCommand, Non
         self.called = True
 
 
-@dataclass(frozen=True, kw_only=True)
 class ReadMeetingDetailsQuery(Request):
-    meeting_room_id: UUID = field()
+    meeting_room_id: UUID
 
 
-@dataclass(frozen=True, kw_only=True)
 class ReadMeetingDetailsQueryResult(Response):
-    meeting_room_id: UUID = field()
+    meeting_room_id: UUID
 
 
 class ReadMeetingDetailsQueryHandler(

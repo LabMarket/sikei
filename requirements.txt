@@ -5,7 +5,7 @@ mypy
 black
 types-redis
 vulture
-dataclass_factory
+pydantic
 isort
 orjson
 redis

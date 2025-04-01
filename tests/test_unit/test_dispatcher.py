@@ -1,21 +1,24 @@
-from dataclasses import dataclass, field
-from uuid import UUID, uuid4
+from typing import Optional
+from uuid import uuid4
 
 from sikei.dispatcher import DefaultDispatcher
 from sikei.events import Event
 from sikei.middlewares import MiddlewareChain
 from sikei.requests import Request, RequestHandler
 from sikei.requests.map import RequestMap
+from sikei.response import Response
 
 
-@dataclass(kw_only=True)
-class ReadMeetingDetailsQuery:
-    meeting_room_id: UUID = field()
+class ReadMeetingDetailsQuery(Request):
+    meeting_room_id: str
+    second: Optional[str] = None
+    third: Optional[str] = None
 
 
-@dataclass(kw_only=True)
-class ReadMeetingDetailsQueryResult:
-    meeting_room_id: UUID = field()
+class ReadMeetingDetailsQueryResult(Response):
+    meeting_room_id: str
+    second: Optional[str] = None
+    third: Optional[str] = None
 
 
 class ReadMeetingDetailsQueryHandler(
@@ -53,7 +56,7 @@ async def test_default_dispatcher_logic() -> None:
         middleware_chain=middleware_chain,
     )
 
-    request = ReadMeetingDetailsQuery(meeting_room_id=uuid4())
+    request = ReadMeetingDetailsQuery(meeting_room_id=str(uuid4()))
 
     result = await dispatcher.dispatch(request)
 
@@ -72,7 +75,7 @@ async def test_default_dispatcher_chain_logic() -> None:
         middleware_chain=middleware_chain,
     )
 
-    request = ReadMeetingDetailsQuery(meeting_room_id=uuid4())
+    request = ReadMeetingDetailsQuery(meeting_room_id=str(uuid4()))
 
     result = await dispatcher.dispatch(request)
 

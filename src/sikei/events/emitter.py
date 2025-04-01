@@ -1,8 +1,6 @@
 import logging
 from functools import singledispatchmethod
 
-from dataclass_factory import Factory
-
 from sikei.brokers.protocol import Message, MessageBroker
 from sikei.container.protocol import Container
 from sikei.events.event import DomainEvent, ECSTEvent, Event, NotificationEvent
@@ -92,13 +90,9 @@ class EventEmitter:
 
 
 def _build_message(event: NotificationEvent | ECSTEvent) -> Message:
-    factory = Factory()
-
-    payload = factory.dump(event)
-
     return Message(
         message_type=event._event_type,
         message_name=type(event).__name__,
         message_id=event.event_id,
-        payload=payload,
+        payload=event.model_dump(),
     )

@@ -1,8 +1,8 @@
 from typing import Protocol, TypeVar
 
-from sikei.events.event import DomainEvent
+from sikei.events.event import Event
 
-E = TypeVar("E", bound=DomainEvent, contravariant=True)
+E = TypeVar("E", bound=Event, contravariant=True)
 
 
 class EventHandler(Protocol[E]):
