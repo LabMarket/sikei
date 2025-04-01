@@ -18,9 +18,16 @@ SiKei is a Python library for implementing CQRS pattern in your Python applicati
 
 - Implements the CQRS pattern.
 - Simple, yet flexible API.
-- Supports multiple message brokers, such as [Redis Pub/Sub](https://redis.io/docs/manual/pubsub/) and [Azure Service Bus](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview).
-- Supports various di-frameworks, such as [di](https://github.com/adriangb/di) and [rodi](https://github.com/Neoteroi/rodi).
+- Supports multiple message brokers, such as [Redis Pub/Sub](https://redis.io/docs/manual/pubsub/), [RabbitMQ](https://www.rabbitmq.com/) and [Azure Service Bus](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview).
+- Supports various di-frameworks, such as [Dependency Injector](https://github.com/ets-labs/python-dependency-injector) and [di](https://github.com/adriangb/di) and [rodi](https://github.com/Neoteroi/rodi).
 - Easy to integrate with existing codebases.
+
+## Differences from original project :wrench:
+
+- Added support to [RabbitMQ](https://www.rabbitmq.com/) based on work from [Fran Martin](https://github.com/manudiv16/diator).
+- Added support to [Dependency Injector](https://github.com/ets-labs/python-dependency-injector) from **ETS Labs**.
+- Migration to [Pydantic](https://pydantic-docs.helpmanual.io/) based on work from [0xSecure](https://github.com/0xSecure/diator).
+- Some incompatibilities in modules names and project organization to better integrate with my setup (easy to adapt from legacy projects)
 
 ## Installation :triangular_ruler:
 
