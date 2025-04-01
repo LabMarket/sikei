@@ -26,10 +26,10 @@ class EventEmitter:
       event_emitter = EventEmitter(event_map, container, message_broker)
 
       # Uses UserJoinedDomainEventHandler for handling event:
-      await event_emitter.emit(user_joined_domain_event)
+      await emitter.emit(user_joined_domain_event)
 
       # Sends event to the Redis Pub/Sub:
-      await event_emitter.emit(user_joined_notification_event)
+      await emitter.emit(user_joined_notification_event)
 
     """
 

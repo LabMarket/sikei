@@ -2,7 +2,7 @@ from collections import defaultdict
 from typing import Type, TypeVar
 
 from sikei.events.event import DomainEvent
-from sikei.events.event_handler import EventHandler
+from sikei.events.handler import EventHandler
 
 E = TypeVar("E", bound=DomainEvent, contravariant=True)
 

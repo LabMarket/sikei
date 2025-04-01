@@ -1,5 +1,5 @@
 from sikei.container.protocol import Container
-from sikei.dispatcher.dispatch_result import DispatchResult
+from sikei.dispatcher.result import DispatchResult
 from sikei.middlewares.base import MiddlewareChain
 from sikei.requests.map import RequestMap
 from sikei.requests.request import Request

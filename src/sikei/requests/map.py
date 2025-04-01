@@ -1,7 +1,7 @@
 from typing import Type
 
+from sikei.requests.handler import RequestHandler
 from sikei.requests.request import Request
-from sikei.requests.request_handler import RequestHandler
 
 
 class RequestMap:

@@ -96,7 +96,7 @@ Result:
 
 ```bash
 DEBUG:sikei.middlewares.logging:Request JoinMeetingRoomCommand handled. Response: None
-DEBUG:sikei.events.event_emitter:Sending Notification Event(a9aab9b3-6a40-4caa-ba63-93d3f92bb11b) to message broker RedisMessageBroker
+DEBUG:sikei.events.emitter:Sending Notification Event(a9aab9b3-6a40-4caa-ba63-93d3f92bb11b) to message broker RedisMessageBroker
 DEBUG:sikei.brokers.redis:Sending message to Redis Pub/Sub a9aab9b3-6a40-4caa-ba63-93d3f92bb11b.
-DEBUG:sikei.events.event_emitter:Handling Event(UserJoinedDomainEvent) via event handler(UserJoinedEventHandler)
+DEBUG:sikei.events.emitter:Handling Event(UserJoinedDomainEvent) via event handler(UserJoinedEventHandler)
 ```

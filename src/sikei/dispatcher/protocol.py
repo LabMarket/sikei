@@ -1,6 +1,6 @@
 from typing import Protocol
 
-from sikei.dispatcher.dispatch_result import DispatchResult
+from sikei.dispatcher.result import DispatchResult
 from sikei.requests.request import Request
 
 
