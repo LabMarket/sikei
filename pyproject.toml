@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "sikei"
-version = "0.2.0"
+version = "0.2.1"
 authors = [{ name = "Murad Akhundov", email = "akhundov1murad@gmail.com" },
            { name = "José Marcos Gomes", email = "jose.marcos.gomes@gmail.com" }]
 description = "This is a fork from Diator, a Python library for implementing CQRS pattern in your applications. The original project is apparently abandoned."
