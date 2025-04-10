@@ -11,7 +11,7 @@ class RabbitMQMessageBroker:
         self._routing_key = routing_key 
         self._exchange = exchange 
 
-    async def send_message(self, message: Message) -> None:
+    async def send(self, message: Message) -> None:
         async with self._connection as connection:
             
             channel = await connection.channel()

@@ -11,7 +11,7 @@ class AzureMessageBroker:
         self._topic_name = topic_name
         self._timeout = timeout
 
-    async def send_message(self, message: Message) -> None:
+    async def send(self, message: Message) -> None:
         async with self._client:
             sender = self._client.get_topic_sender(self._topic_name)
 

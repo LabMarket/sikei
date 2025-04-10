@@ -66,7 +66,7 @@ classDiagram
         +get(event_type) List[Type[EventHandler]]
     }
     class MessageBroker{
-        +send_message(message) None
+        +send(message) None
     }
     class EventEmitter{
         +EventMap event_map

@@ -13,7 +13,7 @@ class RedisMessageBroker:
         self._client = client
         self._channel_prefix = channel_prefix or "python_sikei_channel"
 
-    async def send_message(self, message: Message) -> None:
+    async def send(self, message: Message) -> None:
         async with self._client.pubsub() as pubsub:
             channel = f"{self._channel_prefix}:{message.message_type}:{message.message_id}"
 

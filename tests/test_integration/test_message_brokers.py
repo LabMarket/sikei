@@ -16,7 +16,7 @@ async def test_redis_message_broker_publish_event(
         await pubsub.psubscribe("test_sikei_channel:*")
 
         message = Message(payload={"phrase": "hello"}, message_type="", message_name="")
-        await redis_message_broker.send_message(message=message)
+        await redis_message_broker.send(message=message)
         await pubsub.get_message(ignore_subscribe_messages=True)
         pubsub_data: dict = await pubsub.get_message(ignore_subscribe_messages=True)
 
@@ -39,7 +39,7 @@ async def test_rabbitmq_message_broker_publish_event(
         queue = await channel.declare_queue("test_sikei_queue")
 
         message = Message(payload={"phrase": "hello"}, message_type="", message_name="")
-        await rabbitmq_message_broker.send_message(message=message)
+        await rabbitmq_message_broker.send(message=message)
 
         await channel.set_qos(prefetch_count=100)
   

@@ -71,7 +71,7 @@ class EventEmitter:
             type(self._message_broker).__name__,
         )
 
-        await self._message_broker.send_message(message)
+        await self._message_broker.send(message)
 
     @emit.register
     async def _(self, event: ECSTEvent) -> None:
@@ -86,7 +86,7 @@ class EventEmitter:
             type(self._message_broker).__name__,
         )
 
-        await self._message_broker.send_message(message)
+        await self._message_broker.send(message)
 
 
 def _build_message(event: NotificationEvent | ECSTEvent) -> Message:

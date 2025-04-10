@@ -19,5 +19,5 @@ class MessageBroker(Protocol):
     Used for sending messages to message brokers (currently only redis supported).
     """
 
-    async def send_message(self, message: Message) -> None:
+    async def send(self, message: Message) -> None:
         ...
