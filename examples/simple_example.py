@@ -1,5 +1,4 @@
 import asyncio
-from dataclasses import dataclass, field
 
 from di import Container, bind_by_type
 from di.dependent import Dependent
@@ -10,11 +9,10 @@ from sikei.mediator import Mediator
 from sikei.requests import Request, RequestHandler, RequestMap
 
 
-@dataclass(frozen=True, kw_only=True)
 class JoinMeetingCommand(Request):
     meeting_id: int
     user_id: int
-    is_late: bool = field(default=False)
+    is_late: bool = False
 
 
 class JoinMeetingCommandHandler(RequestHandler[JoinMeetingCommand, None]):

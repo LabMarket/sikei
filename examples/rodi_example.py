@@ -1,6 +1,5 @@
 import asyncio
 import logging
-from dataclasses import dataclass
 
 from redis import asyncio as redis
 from rodi import Container
@@ -20,17 +19,14 @@ from sikei.middlewares.logging import LoggingMiddleware
 from sikei.requests import Request, RequestHandler, RequestMap
 
 
-@dataclass(frozen=True, kw_only=True)
 class JoinMeetingRoomCommand(Request):
     user_id: int
 
 
-@dataclass(frozen=True, kw_only=True)
 class UserJoinedDomainEvent(DomainEvent):
     user_id: int
 
 
-@dataclass(frozen=True, kw_only=True)
 class UserJoinedNotificationEvent(NotificationEvent):
     user_id: int
 

@@ -1,6 +1,5 @@
 import asyncio
 import os
-from dataclasses import dataclass
 from datetime import timedelta
 
 import rodi
@@ -13,12 +12,10 @@ from sikei.mediator import Mediator
 from sikei.requests import Request, RequestHandler, RequestMap
 
 
-@dataclass(frozen=True, kw_only=True)
 class CleanUnactiveUsersCommand(Request):
     eta: timedelta
 
 
-@dataclass(frozen=True, kw_only=True)
 class UnactiveUsersCleaned(NotificationEvent):
     ids: list
 

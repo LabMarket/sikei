@@ -1,5 +1,4 @@
 import asyncio
-from dataclasses import dataclass
 
 from di import Container, bind_by_type
 from di.dependent import Dependent
@@ -19,17 +18,14 @@ from sikei.middlewares import MiddlewareChain
 from sikei.requests import Request, RequestHandler, RequestMap
 
 
-@dataclass(frozen=True, kw_only=True)
 class JoinMeetingRoomCommand(Request):
     user_id: int
 
 
-@dataclass(frozen=True, kw_only=True)
 class UserJoinedDomainEvent(DomainEvent):
     user_id: int
 
 
-@dataclass(frozen=True, kw_only=True)
 class UserJoinedNotificationEvent(NotificationEvent):
     user_id: int
 
