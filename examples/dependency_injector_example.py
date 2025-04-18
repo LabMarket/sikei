@@ -1,6 +1,6 @@
 import asyncio
 
-from dependency_injector import containers, providers
+from dependency_injector import providers
 from redis import asyncio as redis
 
 from sikei.brokers.redis import RedisMessageBroker
@@ -25,6 +25,8 @@ class JoinMeetingRoomCommand(Request):
 class UserJoinedDomainEvent(DomainEvent):
     user_id: int
 
+class UserLeftDomainEvent(DomainEvent):
+    user_id: int
 
 class UserJoinedNotificationEvent(NotificationEvent):
     user_id: int
@@ -42,6 +44,7 @@ class JoinMeetingRoomCommandHandler(RequestHandler[JoinMeetingRoomCommand, None]
     async def handle(self, request: JoinMeetingRoomCommand) -> None:
         self._events.append(UserJoinedDomainEvent(user_id=request.user_id))
         self._events.append(UserJoinedNotificationEvent(user_id=123))
+        print("COMMANDED")
 
 
 class UserJoinedEventHandler(EventHandler[UserJoinedDomainEvent]):
@@ -56,6 +59,20 @@ class UserJoinedEventHandler(EventHandler[UserJoinedDomainEvent]):
     async def handle(self, event: UserJoinedDomainEvent) -> None:
         self._events: list[Event] = []
         print("READY", event)
+
+
+class UserLeftEventHandler(EventHandler[UserLeftDomainEvent]):
+    
+    def __init__(self) -> None:
+        self._events = []
+    
+    @property
+    def events(self) -> list[Event]:
+        return self._events
+
+    async def handle(self, event: UserLeftDomainEvent) -> None:
+        self._events: list[Event] = []
+        print("LEFT", event)
 
 
 class FirstMiddleware:
@@ -75,12 +92,6 @@ class SecondMiddleware:
         print("After 2 handling...")
         return response
 
-class JoinMeetingRoomCommandHandlerContainer(containers.DeclarativeContainer):
-    dependency = providers.Factory(JoinMeetingRoomCommandHandler)
-
-class UserJoinedEventHandlerContainer(containers.DeclarativeContainer):
-    dependency = providers.Factory(UserJoinedEventHandler)
-
 async def main() -> None:
     middleware_chain = MiddlewareChain()
     middleware_chain.add(FirstMiddleware())
@@ -93,10 +104,11 @@ async def main() -> None:
 
     
     container = DependencyInjectorContainer()
-    container.attach_external_container(JoinMeetingRoomCommandHandlerContainer())
-    container.attach_external_container(UserJoinedEventHandlerContainer())
+    container.c = providers.Factory(JoinMeetingRoomCommandHandler)
+    container.e = providers.Factory(UserJoinedEventHandler)
+    container.attach_external_container(container.c)
+    container.attach_external_container(container.e)
     
-
     redis_client: redis.Redis = redis.Redis.from_url("redis://broker:p4ssw0rd@127.0.0.1:6379/3")
 
     event_emitter = EventEmitter(
@@ -112,7 +124,7 @@ async def main() -> None:
         middleware_chain=middleware_chain,
     )
 
-    await mediator.send(JoinMeetingRoomCommand(user_id=1))
+    await mediator.send(JoinMeetingRoomCommand(user_id=100))
 
 
 if __name__ == "__main__":
