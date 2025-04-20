@@ -88,7 +88,6 @@ class EventEmitter:
 
         await self._message_broker.send(message)
 
-
 def _build_message(event: NotificationEvent | ECSTEvent) -> Message:
     return Message(
         message_type=event._event_type,
