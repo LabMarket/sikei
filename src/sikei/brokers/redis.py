@@ -16,6 +16,10 @@ class RedisMessageBroker:
     async def send(self, message: Message) -> None:
         channel = f"{self._prefix}:{message.message_type}:{message.message_id}"
         logger.debug("Sending message to Redis Pub/Sub %s.", message.message_id)
-        async with self._client() as client:
+        if callable(self._client):
+            _c=self._client()
+        else:
+            _c=self._client
+        async with _c as client:
             await client.publish(channel, orjson.dumps(message.model_dump()))
         
