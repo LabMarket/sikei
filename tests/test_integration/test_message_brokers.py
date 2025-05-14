@@ -1,11 +1,11 @@
 import json
 from typing import Optional
 
-import pytest
+import aio_pika
 import redis.asyncio as redis
 from aio_pika.abc import AbstractIncomingMessage
 
-from sikei.brokers.rabbitmq import Message, RabbitMQMessageBroker
+from sikei.brokers.amqp import AMQPMessageBroker, Message
 from sikei.brokers.redis import RedisMessageBroker
 
 
@@ -27,19 +27,18 @@ async def test_redis_message_broker_publish_event(
         assert "message_type" in data
         assert "message_id" in data
         
-@pytest.mark.skip(reason="don't have RabbitMQ available")
-async def test_rabbitmq_message_broker_publish_event(
-    rabbitmq_client_subs, rabbitmq_message_broker: RabbitMQMessageBroker
+async def test_amqp_message_broker_publish_event(
+    amqp_message_broker: AMQPMessageBroker, amqp_client_subs: aio_pika.Connection
 ) -> None:
     
-    async with  rabbitmq_client_subs as connection:
+    async with  amqp_client_subs as connection:
         
         channel = await connection.channel()
         await channel.set_qos(prefetch_count=100)
         queue = await channel.declare_queue("test_sikei_queue")
 
         message = Message(payload={"phrase": "hello"}, message_type="", message_name="")
-        await rabbitmq_message_broker.send(message=message)
+        await amqp_message_broker.send(message=message)
 
         await channel.set_qos(prefetch_count=100)
   

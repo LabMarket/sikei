@@ -1,9 +1,10 @@
 import asyncio
+from contextlib import asynccontextmanager
 
+from aio_pika import connect_robust
 from dependency_injector import providers
-from redis import asyncio as redis
 
-from sikei.brokers.redis import RedisMessageBroker
+from sikei.brokers.amqp import AMQPMessageBroker
 from sikei.container.injector import DependencyInjectorContainer
 from sikei.events import (
     DomainEvent,
@@ -108,12 +109,25 @@ async def main() -> None:
     container.e = providers.Factory(UserJoinedEventHandler)
     container.attach_external_container(container.c)
     container.attach_external_container(container.e)
-    
-    def redis_client():
-        return redis.Redis.from_url("redis://broker:p4ssw0rd@127.0.0.1:6379/3")
+
+    @asynccontextmanager
+    async def amqp_client_subs():
+        try:
+            connection = await connect_robust(
+                "amqp://sales:p4ssw0rd@127.0.0.1:5672/bookstore", 
+                client_properties={"connection_name": "caller"}
+            )
+            yield connection
+        finally:
+            await connection.close()
+
+    # amqp_client_subs = await connect_robust(
+    #     "amqp://sales:p4ssw0rd@127.0.0.1:5672/bookstore", 
+    #     client_properties={"connection_name": "caller"}
+    # )
 
     event_emitter = EventEmitter(
-        message_broker=RedisMessageBroker(redis_client),
+        message_broker=AMQPMessageBroker(amqp_client_subs, routing_key="test_sikei_queue"),
         event_map=event_map,
         container=container,
     )
@@ -126,6 +140,9 @@ async def main() -> None:
     )
 
     await mediator.send(JoinMeetingRoomCommand(user_id=100))
+
+    # await amqp_client_subs.close()
+
 
 
 if __name__ == "__main__":

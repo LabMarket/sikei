@@ -5,14 +5,18 @@ import orjson
 from sikei.brokers.protocol import Message
 
 
-class RabbitMQMessageBroker:
+class AMQPMessageBroker:
     def __init__(self, client, *, routing_key: str | None = None, exchange: str | None = None) -> None:
         self._connection = client
         self._routing_key = routing_key 
         self._exchange = exchange 
 
     async def send(self, message: Message) -> None:
-        async with self._connection as connection:
+        if callable(self._connection):
+            _c=self._connection()
+        else:
+            _c=self._connection
+        async with _c as connection:
             
             channel = await connection.channel()
             if self._exchange:
