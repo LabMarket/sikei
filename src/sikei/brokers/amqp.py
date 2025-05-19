@@ -1,25 +1,25 @@
+import logging
 
 import aio_pika
 import orjson
 
-from sikei.brokers.protocol import Message
+from sikei.brokers.protocol import Message, MessageBroker
+
+logger = logging.getLogger(__name__)
 
 
-class AMQPMessageBroker:
-    def __init__(self, client, *, routing_key: str | None = None, exchange: str | None = None) -> None:
-        self._connection = client
-        self._routing_key = routing_key 
+class AMQPMessageBroker(MessageBroker):
+    def __init__(self, client: callable([..., aio_pika.Connection]), *, routing: str | None = None, exchange: str | None = None) -> None:
+        self._client = client
+        self._routing = routing 
         self._exchange = exchange 
 
     async def send(self, message: Message) -> None:
-        if callable(self._connection):
-            _c=self._connection()
-        else:
-            _c=self._connection
-        async with _c as connection:
-            
-            channel = await connection.channel()
+        async with self._client() as _:
+            _r=self._routing or ""
+            _m=aio_pika.Message(body=orjson.dumps(message.model_dump()))
             if self._exchange:
-                await channel.basic_publish(exchange=self._exchange,body=aio_pika.Message(body=orjson.dumps(message)),routing_key=self._routing_key)
+                _e=await _.declare_exchange(self._exchange, aio_pika.ExchangeType.DIRECT)
+                await _e.publish(_m, routing_key=_r)
             else:
-                await channel.default_exchange.publish(aio_pika.Message(body=orjson.dumps(message.model_dump())),routing_key=self._routing_key)
+                await _.default_exchange.publish(_m, routing_key=_r)
