@@ -13,7 +13,7 @@ def redis_client() -> redis.Redis:
 
 @pytest.fixture()
 def redis_message_broker(redis_client: redis.Redis) -> RedisMessageBroker:
-    return RedisMessageBroker(client=redis_client, channel_prefix="test_sikei_channel")
+    return RedisMessageBroker(client=redis_client, prefix="test_sikei_channel")
 
 @pytest.fixture()
 async def amqp_client() -> aio_pika.Connection:
