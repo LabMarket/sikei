@@ -18,8 +18,8 @@ async def test_redis_message_broker_publish_event(
 
         message = Message(payload={"phrase": "hello"}, message_type="", message_name="")
         await redis_message_broker.send(message=message)
-        await pubsub.get_message(ignore_subscribe_messages=True)
-        pubsub_data: dict = await pubsub.get_message(ignore_subscribe_messages=True)
+        # await pubsub.get_message(ignore_subscribe_messages=True)
+        pubsub_data = await pubsub.get_message(ignore_subscribe_messages=True)
 
         assert pubsub_data
 

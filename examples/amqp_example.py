@@ -1,7 +1,10 @@
 import asyncio
 from contextlib import asynccontextmanager
+from typing import AsyncContextManager
 
-from aio_pika import connect_robust
+from aio_pika import Channel, Connection, connect_robust
+from aio_pika.abc import AbstractRobustConnection
+from aio_pika.pool import Pool
 from dependency_injector import providers
 
 from sikei.brokers.amqp import AMQPMessageBroker
@@ -93,6 +96,26 @@ class SecondMiddleware:
         print("After 2 handling...")
         return response
 
+class Queue:
+
+    def __init__(self, url: str) -> None:
+
+        async def _connection() -> AbstractRobustConnection:
+            return await connect_robust(url=url)
+
+        async def _channel() -> Channel:
+            async with _connection_pool.acquire() as _:
+                return await _.channel()
+
+        _connection_pool: Pool=Pool(_connection)
+        self._channel_pool: Pool=Pool(_channel)
+        
+    @asynccontextmanager
+    async def connection(self) -> AsyncContextManager[Connection]:
+        async with self._channel_pool.acquire() as _:
+            yield _
+
+
 async def main() -> None:
     middleware_chain = MiddlewareChain()
     middleware_chain.add(FirstMiddleware())
@@ -110,39 +133,37 @@ async def main() -> None:
     container.attach_external_container(container.c)
     container.attach_external_container(container.e)
 
-    @asynccontextmanager
-    async def amqp_client_subs():
-        try:
-            connection = await connect_robust(
-                "amqp://sales:p4ssw0rd@127.0.0.1:5672/bookstore", 
-                client_properties={"connection_name": "caller"}
-            )
-            yield connection
-        finally:
-            await connection.close()
+    queue=providers.DelegatedFactory(
+        Queue,
+        url="amqp://sales:p4ssw0rd@127.0.0.1:5672/bookstore"
+    )
+    
+    client=providers.Resource(
+        queue.provided.connection
+    )
 
-    # amqp_client_subs = await connect_robust(
-    #     "amqp://sales:p4ssw0rd@127.0.0.1:5672/bookstore", 
-    #     client_properties={"connection_name": "caller"}
-    # )
+    broker=providers.Factory(
+        AMQPMessageBroker, 
+        client=client, 
+        routing="test_sikei_queue",
+    )
 
-    event_emitter = EventEmitter(
-        message_broker=AMQPMessageBroker(amqp_client_subs, routing_key="test_sikei_queue"),
+    event_emitter = providers.Factory(
+        EventEmitter,
+        message_broker=broker,
         event_map=event_map,
         container=container,
     )
 
-    mediator = Mediator(
+    mediator = providers.Factory(
+        Mediator,
         request_map=request_map,
         event_emitter=event_emitter,
         container=container,
         middleware_chain=middleware_chain,
     )
-
-    await mediator.send(JoinMeetingRoomCommand(user_id=100))
-
-    # await amqp_client_subs.close()
-
+    
+    await mediator().send(JoinMeetingRoomCommand(user_id=100))
 
 
 if __name__ == "__main__":
